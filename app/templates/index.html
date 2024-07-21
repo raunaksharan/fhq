@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Sales Dashboard</h1>
+    <div class="container">
+        <canvas id="salesByChannelChart"></canvas>
+    </div>
+    <div class="container">
+        <canvas id="salesBySkuChart"></canvas>
+    </div>
+    <div class="container">
+        <h2>SKU Profitability</h2>
+        <div class="table-container">
+            <table id="skuProfitabilityTable" class="display">
+                <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>Profitability</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <canvas id="profitabilityByChannelChart"></canvas>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
