@@ -1,7 +1,7 @@
 -- Create the table to store the calculated COGS
-DROP TABLE IF EXISTS calculated_cogs;
+DROP TABLE IF EXISTS calculated_cogs_2024_07_01;
 
-CREATE TABLE calculated_cogs (
+CREATE TABLE calculated_cogs_2024_07_01 (
     order_id TEXT,
     item_name TEXT,
     order_date TEXT,
@@ -24,16 +24,16 @@ CREATE TABLE calculated_cogs (
 
 -- Calculate COGS for each order item in a FIFO manner
 WITH cte AS (
-    SELECT o.order_id, o.sku_id AS item_name, o.order_date_time_utc AS order_date, o.ordered_quantity AS order_units, 
+    SELECT o.order_id, c.item_name AS item_name, o.order_date_time_utc AS order_date, o.ordered_quantity AS order_units, 
            c.Quantity AS cogs_units, CAST(c.cost_price AS REAL) AS price, 
            SUM(o.ordered_quantity) OVER (PARTITION BY o.sku_id ORDER BY o.order_date_time_utc) AS cumulative_order_units,
            SUM(c.Quantity) OVER (PARTITION BY c.item_name ORDER BY c.created_at) AS cumulative_cogs_units,
            c.rowid AS cogs_rowid
     FROM Orders_New_query_2024_07_01 o
-    JOIN COGS_New_query_2024_07_01 c ON o.sku_id = c.item_name
+    JOIN COGS_New_query_2024_07_01 c ON o.sku_id = c.channel_name || '_' || c.sku_id
     ORDER BY o.order_date_time_utc, c.created_at
 )
-INSERT INTO calculated_cogs (order_id, item_name, order_date, ordered_quantity, unit_price, total_cogs)
+INSERT INTO calculated_cogs_2024_07_01 (order_id, item_name, order_date, ordered_quantity, unit_price, total_cogs)
 SELECT order_id, item_name, order_date, order_units,
        price,
        order_units * price AS total_cogs

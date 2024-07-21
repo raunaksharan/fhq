@@ -45,7 +45,7 @@ def sku_profitability():
         SELECT o.sku_id, 
                SUM(o.gross_merchandise_value - (o.ordered_quantity * c.unit_price)) as profitability
         FROM Orders_New_query_2024_07_01 o
-        JOIN calculated_cogs c ON o.order_id = c.order_id
+        JOIN calculated_cogs_2024_07_01 c ON o.order_id = c.order_id
         GROUP BY o.sku_id
     """
     data = query_db(query)
@@ -58,7 +58,7 @@ def profitability_by_channel():
         SELECT o.source, 
                SUM(o.gross_merchandise_value - (o.ordered_quantity * c.unit_price)) as profitability
         FROM Orders_New_query_2024_07_01 o
-        JOIN calculated_cogs c ON o.order_id = c.order_id
+        JOIN calculated_cogs_2024_07_01 c ON o.order_id = c.order_id
         GROUP BY o.source
     """
     data = query_db(query)
@@ -66,4 +66,4 @@ def profitability_by_channel():
     return jsonify(result)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5002)
+    app.run(debug=True, port=5005)

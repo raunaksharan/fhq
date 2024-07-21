@@ -1,4 +1,4 @@
-#!/Users/raunaksharan/Desktop/dev/fhq/app/venv/bin/python3.12
+#!/Users/raunaksharan/Desktop/dev/fhq/fhq/app/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
